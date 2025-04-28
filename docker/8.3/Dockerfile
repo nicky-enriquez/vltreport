@@ -18,9 +18,11 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libonig-dev \
     libxml2-dev \    
+    zip \
  && rm -rf /var/lib/apt/lists/*
 
-
+ RUN apt-get update && apt-get install -y libzip-dev \
+ && docker-php-ext-install zip
 # 2. Apache configs + document root.
 RUN echo "ServerName laravel-app.local" >> /etc/apache2/apache2.conf
 
