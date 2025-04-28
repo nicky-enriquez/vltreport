@@ -60,6 +60,19 @@ return [
             'report' => false,
         ],
 
+        // Aquí agrega tu configuración SFTP
+        'sftp' => [
+            'driver' => 'sftp',
+            'host' => env('SFTP_HOST'),
+            'username' => env('SFTP_USERNAME'),
+            'password' => env('SFTP_PASSWORD'),
+            'port' => (int)env('SFTP_PORT', 22), // El puerto predeterminado para SFTP es 22
+            'root' => '/OUTPUT', // Opcional: Define la ruta raíz en el servidor SFTP
+            'timeout' => 30, // Opcional: Tiempo de espera en segundos
+            // 'privateKey' => env('SFTP_PRIVATE_KEY'), // Opcional: Si usas clave privada en lugar de contraseña
+            // 'passphrase' => env('SFTP_PASSPHRASE'), // Opcional: Frase de contraseña para la clave privada
+        ],
+
     ],
 
     /*

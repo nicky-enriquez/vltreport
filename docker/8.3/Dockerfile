@@ -99,6 +99,7 @@ RUN find /var/www/html -type f -exec chmod 644 {} \;
 #fi
 
 #RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+#RUN chown -R 775 /var/www/html/database
 
 # Expone el puerto 80
 EXPOSE 80

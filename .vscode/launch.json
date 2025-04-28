@@ -1,0 +1,19 @@
+{
+    "version": "0.3.0",
+    "configurations": [                         
+        {
+            "name": "php Docker vltreport",
+            "type": "php",
+            "request": "launch",
+            "port": 9017,
+            "xdebugSettings": {
+                "max_children": 128,
+                "max_data": -1,
+                "max_depth": 3
+            },            
+            "pathMappings": {
+                "/var/www/html": "${workspaceFolder}/backend"
+            }
+        },
+    ]
+}
