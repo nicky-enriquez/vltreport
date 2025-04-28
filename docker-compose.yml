@@ -1,0 +1,13 @@
+version: '2.0'
+services:
+  vltreport:
+    build:
+      context: ./docker/8.3
+      dockerfile: Dockerfile
+    container_name: vltreport
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8083:80"
+    volumes:
+      - ./backend:/var/www/html
