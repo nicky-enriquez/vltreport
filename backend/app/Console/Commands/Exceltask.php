@@ -9,14 +9,14 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Carbon\Carbon;
 
-class processFileSFTP extends Command
+class Exceltask extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:process-file-sftp {--processDate=}';
+    protected $signature = 'excel-task';// {--processDate=}
 
     /**
      * The console command description.
@@ -36,7 +36,7 @@ class processFileSFTP extends Command
         \Log::info('Iniciando el proceso de archivo SFTP...');
         try 
         {
-            $processDateString = $this->option('processDate');
+            $processDateString =null;// isset($this->option('processDate')) ?  $this->option('processDate'): null; // Obtiene la fecha del argumento de la línea de comandos
 
             if ($processDateString) {
                 $processDate = Carbon::parse($processDateString);
@@ -89,10 +89,11 @@ class processFileSFTP extends Command
             \Log::info('Modificando la primera hoja archivo Excel...');
             $rutaArchivoLocal = storage_path('app/private/temp/' . $nombreArchivoSFTP);
             $spreadsheet = IOFactory::load($rutaArchivoLocal);
-            $sheet = $spreadsheet->getActiveSheet();
+            $sheetIndex = 0; // El índice 1 corresponde a la segunda hoja
+            $sheet = $spreadsheet->getSheet($sheetIndex);
  
             // Ejemplo: Reemplazar la primera fila con nuevos datos
-            $header = env("SPREAD_SHEET_TGA_HEADER");
+            $header = env("SPREAD_SHEET_TGA_HEADER");            
             $newHeader = explode(',', $header);            
             $sheet->fromArray($newHeader, null, 'A1'); // Escribe los datos a partir de la celda A1
             $rutaArchivoModificado = storage_path('app/private/temp/modified_'.$nombreArchivoSFTP);
@@ -100,7 +101,7 @@ class processFileSFTP extends Command
             $writer->save($rutaArchivoModificado);
             
             \Log::info('Modificando la segunda hoja archivo Excel...');
-            $spreadsheet = IOFactory::load($rutaArchivoLocal);
+            $spreadsheet = IOFactory::load($rutaArchivoModificado);
             // Obtener la segunda hoja (los índices de las hojas comienzan en 0)
             $sheetIndex = 1; // El índice 1 corresponde a la segunda hoja
             $sheet = $spreadsheet->getSheet($sheetIndex);
@@ -116,13 +117,14 @@ class processFileSFTP extends Command
             \Log::info("Archivo Excel modificado.");
  
             //  // 3. Enviar el archivo modificado por correo electrónico
-            //  $this->info('Enviando el archivo por correo electrónico...');
-            //  Mail::send('emails.archivo_modificado', [], function ($message) use ($rutaArchivoModificado, $correoDestinatario) {
-            //      $message->to($correoDestinatario)
-            //              ->subject('Archivo Excel Modificado')
-            //              ->attach($rutaArchivoModificado);
-            //  });
-            //  $this->info('Correo electrónico enviado.');
+            $correoDestinatario= env('MAIL_TO','nicky.enriquez@kurax.dev');
+            \Log::info('Enviando el archivo por correo electrónico...');
+            Mail::send('emails.tpl_modified_excel', [], function ($message) use ($rutaArchivoModificado, $correoDestinatario,$nombreArchivoSFTP) {
+                 $message->to($correoDestinatario)
+                         ->subject('Archivo Excel Modificado '.$nombreArchivoSFTP)
+                         ->attach($rutaArchivoModificado);
+            });
+            \Log::info('Correo electrónico enviado.');
  
              // Eliminar los archivos temporales
              //Storage::disk('local')->delete('temp/' . $nombreArchivoSFTP);

@@ -19,10 +19,18 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \    
     zip \
+    nano \
  && rm -rf /var/lib/apt/lists/*
 
- RUN apt-get update && apt-get install -y libzip-dev \
+RUN apt-get update && apt-get install -y libzip-dev \
  && docker-php-ext-install zip
+
+RUN apt-get update && apt-get install -y cron
+# Copia tu archivo crontab personalizado (si lo tienes)
+COPY crontab /etc/cron.d/laravel
+# Da permisos de ejecución al archivo crontab
+RUN chmod 0644 /etc/cron.d/laravel
+
 # 2. Apache configs + document root.
 RUN echo "ServerName laravel-app.local" >> /etc/apache2/apache2.conf
 
@@ -106,3 +114,6 @@ EXPOSE 80
 
 # Comando por defecto
 CMD ["apache2-foreground"]
+
+# Asegúrate de que el servicio cron se inicie
+#CMD ["cron", "-f"]

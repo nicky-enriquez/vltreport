@@ -12,7 +12,7 @@ class ProcessExcelController extends Controller
     {
         $processDate = $request->input('proccessDate'); // Obtén el valor del parámetro del request
 
-        Artisan::call('app:process-file-sftp', [
+        Artisan::call('app:excel-task', [
             '--processDate' => $processDate,
         ]);
 
