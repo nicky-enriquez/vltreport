@@ -62,7 +62,7 @@
    ```bash   
    docker-compose up -d --build
 
-5. Ejecutar el programador tareas automaticas (cron) desde docker :   
+5. Ejecuta el programador tareas automaticas schedule artisan(cron) desde docker :   
    ```bash
    docker exec vltreport sh -c "php artisan schedule:work >> storage/logs/cron_laravel.log 2>&1 &"
 
@@ -70,6 +70,16 @@
    ```bash
    cat backend/storage/logs/laravel.log
 
-8. Puedes revisar los pasos que artisan schedule tarea en el log cron_laravel.log   
+8. Puedes revisar los pasos que artisan schedule escribe en el log cron_laravel.log   
    ```bash
    cat backend/storage/logs/cron_laravel.log
+
+9. Puedes ejecutar la tarea desde un endpoint , en caso la descarga no sea exitosa
+   ```bash
+   http://localhost:8083/exceltaskjob?processDate=2025-04-01
+
+10. En caso cambies en produccion la hora de proceso tienes que ejecutar tambien este comando 
+   ```bash
+   docker exec vltreport sh -c "php artisan config:clear"
+[Nota]
+   En caso no procese exitosamente llegara un correo de aviso a destinatario.

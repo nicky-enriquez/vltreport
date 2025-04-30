@@ -18,14 +18,14 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libonig-dev \
     libxml2-dev \    
-    zip \
-    nano \
+    zip \    
  && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && apt-get install -y libzip-dev \
  && docker-php-ext-install zip
 
-RUN apt-get update && apt-get install -y cron
+RUN apt-get update && apt-get install -y cron \ 
+    && nano
 # Copia tu archivo crontab personalizado (si lo tienes)
 COPY crontab /etc/cron.d/laravel
 # Da permisos de ejecución al archivo crontab

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>VLT Torito</title>
+    <title>ERROR VLT Torito</title>
     <style>
         body {
             font-family: sans-serif;
@@ -36,17 +36,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>VLT Torito</h1>
-        @if($existeExcel)
-            <p>Estimado/a destinatario/a,</p>
-            <p>Se adjunta a este correo el archivo Excel con los reportes detallado de TGA y CASH para los fines que considere convenientes.</p>
-            <p>Por favor, revise el contenido del archivo adjunto cuando le sea posible.</p>
-            <p>Gracias por su atención.</p>
-            <p class="disclaimer">Este es un correo electrónico generado automáticamente. Por favor, no responda a esta dirección.</p>
-        @else
-            <p>Estimado/a destinatario/a,</p>
-            <p>No se encontro el archivo excel. Por favor comuniquese con el administrador de sistema</p>            
-        @endif
+        <h1>ERROR VLT Torito</h1>        
+        {{!! $error !!}}
     </div>
 </body>
 </html>

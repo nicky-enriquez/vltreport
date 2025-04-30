@@ -1,13 +1,9 @@
 <?php
 
-//use Illuminate\Foundation\Inspiring;
-//use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
-
 use App\Console\Commands\Exceltask;
 
-// Artisan::command('inspire', function () {
-//     $this->comment(Inspiring::quote());
-// })->purpose('Display an inspiring quote');
 
-Schedule::command(Exceltask::class);
+Schedule::command(Exceltask::class)
+    ->dailyAt(env("SFTP_PROCESS_TIME"))
+    ->timezone("America/Lima");
