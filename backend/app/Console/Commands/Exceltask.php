@@ -95,7 +95,7 @@ class Exceltask extends Command
             // Ejemplo: Reemplazar la primera fila con nuevos datos
             $header = env("SPREAD_SHEET_TGA_HEADER");            
             $newHeader = explode(',', $header);            
-            $sheet->fromArray($newHeader, null, 'A1'); // Escribe los datos a partir de la celda A1
+            $sheet->fromArray($newHeader, null, env('SPREAD_SHEET_TGA_START_CELL')); // Escribe los datos a partir de la celda A1
             $rutaArchivoModificado = storage_path('app/private/temp/modified_'.$nombreArchivoSFTP);
             $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
             $writer->save($rutaArchivoModificado);
@@ -108,7 +108,7 @@ class Exceltask extends Command
 
             $header = env("SPREAD_SHEET_CASH_HEADER");
             $newHeader = explode(',', $header);            
-            $sheet->fromArray($newHeader, null, 'A1'); // Escribe los datos a partir de la celda A1
+            $sheet->fromArray($newHeader, null,env('SPREAD_SHEET_CASH_START_CELL')); // Escribe los datos a partir de la celda A1
 
             $rutaArchivoModificado = storage_path('app/private/temp/modified_'.$nombreArchivoSFTP);
             
