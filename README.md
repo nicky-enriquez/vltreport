@@ -25,11 +25,15 @@
    cd vltreport
 
 2. Copia el archivo de entorno:
-
+   
+   ```bash
+   
    cp .env.example .env
 
 3. Configura las variables del entorno.
    
+   ```bash
+
    #Configuracion para el sftp
    SFTP_HOST=dominiosftp
    SFTP_USERNAME=tuusuariosftp
@@ -54,14 +58,18 @@
    MAIL_FROM_NAME="${APP_NAME}"
    MAIL_TO="destinatario1@gmail.com,destinatario2@gmail.com"
 
-4. Levanta los contenedores:
+4. Levanta los contenedores:   
+   ```bash   
    docker-compose up -d --build
 
-5. Ejecutar el programador tareas automaticas (cron) desde docker :
+5. Ejecutar el programador tareas automaticas (cron) desde docker :   
+   ```bash
    docker exec vltreport sh -c "php artisan schedule:work >> storage/logs/cron_laravel.log 2>&1 &"
 
 7. Puedes revisar los pasos de la tarea en el log laravel.log
+   ```bash
    cat backend/storage/logs/laravel.log
 
 8. Puedes revisar los pasos que artisan schedule tarea en el log cron_laravel.log   
+   ```bash
    cat backend/storage/logs/cron_laravel.log
