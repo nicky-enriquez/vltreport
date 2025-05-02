@@ -57,7 +57,13 @@
    MAIL_FROM_ADDRESS="tucorreo@gmail.com"
    MAIL_FROM_NAME="${APP_NAME}"
    MAIL_TO="destinatario1@gmail.com,destinatario2@gmail.com"
+   MAIL_CC="correocopia@dominio.com" #opcional
+   MAIL_TO_ERROR="nicky.enriquez@kurax.dev" #correo para recibir errores
 
+   #Configuracion para el php
+   PHP_MEMORY_LIMIT=512M
+   PHP_MAX_EXECUTION_TIME=120
+   
 4. Levanta los contenedores:   
    ```bash   
    docker-compose up -d --build
@@ -74,11 +80,7 @@
    ```bash
    cat backend/storage/logs/cron_laravel.log
 
-9. Puedes ejecutar la tarea desde un endpoint , en caso la descarga no sea exitosa
-   ```bash
-   http://localhost:8083/exceltaskjob?processDate=2025-04-01
-
-10. En caso cambies en produccion la hora de proceso tienes que ejecutar tambien este comando 
+9. En caso cambies en produccion la hora de proceso tienes que ejecutar tambien este comando 
    ```bash
    docker exec vltreport sh -c "php artisan config:clear"
 [Nota]
