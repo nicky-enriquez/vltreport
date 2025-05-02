@@ -84,4 +84,5 @@
    ```bash
    docker exec vltreport sh -c "php artisan config:clear"
 [Nota]
-   En caso no procese exitosamente llegara un correo de aviso a destinatario.
+   En caso no exista el documento llegara un correo de aviso a destinatario.
+   En caso se genere un error llegara al correo de soporte de TI 
