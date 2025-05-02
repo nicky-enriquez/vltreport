@@ -88,10 +88,13 @@
    En caso se genere un error llegara al correo de soporte de TI
 
 10. En caso desee probarlo por comando con fecha proceso actual
+   ```bash
    php artisan excel-task 
 
 11. En caso desee probarlo por comando con fecha proceso elegido
-   php artisan excel-task processDate=2025-04-30
+   ```bash
+   php artisan excel-task processDate=2025-04-30   
 
 12. En caso no lea las variables el env. 
+   ```bash
    php artisan config:clear
