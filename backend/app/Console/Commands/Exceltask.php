@@ -17,7 +17,7 @@ class Exceltask extends Command
      *
      * @var string
      */
-    protected $signature = 'excel-task';// {--processDate=}
+    protected $signature = 'excel-task {--processDate=}';
 
     /**
      * The console command description.
@@ -34,16 +34,18 @@ class Exceltask extends Command
     
     public function handle()
     {
+        // Configuración de memoria y tiempo de ejecución    
         ini_set('memory_limit', env('PHP_MEMORY_LIMIT'));
-        ini_set('max_execution_time',env('PHP_EXECUTION_TIME')); 
+        ini_set('max_execution_time',env('PHP_MAX_EXECUTION_TIME')); 
         
         $this->logTail = new LogTailHelper();
         $this->logTail->markPosition();
 
         \Log::info('Iniciando el Proceso desde SFTP...');
+
         try 
         {
-            $processDateString ="2025-04-30";// isset($this->option('processDate')) ?  $this->option('processDate'): null; // Obtiene la fecha del argumento de la línea de comandos
+            $processDateString = $this->option('processDate')!=null ?  $this->option('processDate') : null; // Obtiene la fecha del argumento de la línea de comandos         
 
             [$pathFile,$fileName]=$this->makePath($processDateString);
 
@@ -91,13 +93,12 @@ class Exceltask extends Command
             $processDate = Carbon::now(); // Si no se proporciona, usa la fecha actual
         }
 
-        $fechaNombreArchivo = $processDate->subDay()->format('Y-m-d');
         $año = $processDate->format('Y');
-        $mesNumero = date('n');
-
+        $mesNumero =$processDate->format('n');
+        $dateExcelFile = $processDate->subDay()->format('Y-m-d');
+        
         $months = env("CALENDAR_MONTHS");            
         $nombresMesesIngles = explode(',', $months);                        
-
         // Obtener el nombre del mes en inglés
         $nombreMesIngles = $nombresMesesIngles[$mesNumero-1];
         // Obtener la primera letra del nombre del mes en mayúscula
@@ -110,7 +111,7 @@ class Exceltask extends Command
         // Construir la ruta completa de la carpeta remota
         $rutaRemota = $año.'/'.$mesAñoFormato;        
         // Nombre del archivo en el SFTP 
-        $nombreArchivoSFTP ="VLT_detailed_report_".$fechaNombreArchivo.".xlsx";//el proceso es de una dia antes, 'VLT_detailed_report_'.date('Y-m-d') .'.xlsx';
+        $nombreArchivoSFTP ="VLT_detailed_report_".$dateExcelFile.".xlsx";//el proceso es de una dia antes, 'VLT_detailed_report_'.date('Y-m-d') .'.xlsx';
         $rutaArchivoSFTP = $rutaRemota.'/'.$nombreArchivoSFTP;
 
         return [$rutaArchivoSFTP,$nombreArchivoSFTP];

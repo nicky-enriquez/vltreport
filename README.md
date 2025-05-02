@@ -85,4 +85,13 @@
    docker exec vltreport sh -c "php artisan config:clear"
 [Nota]
    En caso no exista el documento llegara un correo de aviso a destinatario.
-   En caso se genere un error llegara al correo de soporte de TI 
+   En caso se genere un error llegara al correo de soporte de TI
+
+10. En caso desee probarlo por comando con fecha proceso actual
+   php artisan excel-task 
+
+11. En caso desee probarlo por comando con fecha proceso elegido
+   php artisan excel-task processDate=2025-04-30
+
+12. En caso no lea las variables el env. 
+   php artisan config:clear
